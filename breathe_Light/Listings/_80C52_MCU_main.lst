@@ -1,0 +1,102 @@
+C51 COMPILER V9.57.0.0   _80C52_MCU_MAIN                                                   04/14/2024 17:29:55 PAGE 1   
+
+
+C51 COMPILER V9.57.0.0, COMPILATION OF MODULE _80C52_MCU_MAIN
+OBJECT MODULE PLACED IN .\Objects\_80C52_MCU_main.obj
+COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE _80C52_MCU\scr\_80C52_MCU_main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEX
+                    -TEND PRINT(.\Listings\_80C52_MCU_main.lst) TABS(2) OBJECT(.\Objects\_80C52_MCU_main.obj)
+
+line level    source
+
+   1          #include <AT89X52.h>
+   2          #include "_80C52_MCU_main.h"
+*** WARNING C318 IN LINE 2 OF _80C52_MCU\scr\_80C52_MCU_main.c: can't open file '_80C52_MCU_main.h'
+   3          
+   4          #define MAX 0x50   //定时上限定义
+   5          #define MIN 0x00   //定时下限定义
+   6          #define TIMELINE 11         //时间分频常数
+   7          #define TRUE  1
+   8          #define FALSE 0             //标志位常数
+   9          
+  10          
+  11          unsigned int TimeCounter;
+  12          bit ArrowFlg = 0;         //方向标志位
+  13          unsigned char upCounter,downCounter;    //增加计数器和减少计数器
+  14          
+  15          sbit LED=P2^0;
+  16          
+  17          //T0的中断服务子函数
+  18          void T0Deal() interrupt 1 using 0
+  19          {
+  20   1        TH0=0xf1;
+  21   1        TL0=0xf1;
+  22   1        TR0=1;
+  23   1        TimeCounter++;  //定时计数器增加
+  24   1        if(TimeCounter == TIMELINE)
+  25   1        {
+  26   2          if((upCounter == MAX)&&(downCounter == MIN))  //计数方向标志位切换
+  27   2          {
+  28   3            ArrowFlg = FALSE;
+  29   3          }
+  30   2          if((upCounter == MIN)&&(downCounter == MAX))
+  31   2          {
+  32   3            ArrowFlg= TRUE;
+  33   3          }
+  34   2          if(ArrowFlg == 1)   //如果是增加计数
+  35   2          {
+  36   3            upCounter++;
+  37   3            downCounter--;
+  38   3          }
+  39   2          else               //如果是减少计数
+  40   2          {
+  41   3            upCounter--;
+  42   3            downCounter++;
+  43   3          }
+  44   2          TimeCounter=0;
+  45   2        }
+  46   1      }
+  47          //延时函数
+  48          void Delay(unsigned int i)
+  49          {
+  50   1        unsigned int j;
+  51   1        while(i--)
+  52   1        {
+  53   2          for(j=0;j<32;j++);     //延时
+C51 COMPILER V9.57.0.0   _80C52_MCU_MAIN                                                   04/14/2024 17:29:55 PAGE 2   
+
+  54   2        }
+  55   1      }
+  56          
+  57          void main()
+  58          {
+  59   1        upCounter = MIN;
+  60   1        downCounter = MAX;     //计数器初始化
+  61   1        TMOD = 0x01;          //设置定时器工作方式
+  62   1        TH0 = 0xF0;
+  63   1        TL0 = 0xF0 ;          //T0初始化值
+  64   1        EA = 1;
+  65   1        ET0 = 1;              //开中断
+  66   1        TR0 = 1;              //启动T0
+  67   1        while(1)
+  68   1        {
+  69   2          LED=0;            //输出变化的PWM波形
+  70   2          Delay(downCounter);   
+  71   2          LED=1;
+  72   2          Delay(upCounter);
+  73   2        }
+  74   1      }
+  75          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    143    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      4    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      1    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)
