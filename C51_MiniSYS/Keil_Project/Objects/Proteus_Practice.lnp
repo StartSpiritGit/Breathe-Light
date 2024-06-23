@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\main.obj" 
+TO ".\Objects\Proteus_Practice" 
+PRINT(".\Listings\Proteus_Practice.m51")

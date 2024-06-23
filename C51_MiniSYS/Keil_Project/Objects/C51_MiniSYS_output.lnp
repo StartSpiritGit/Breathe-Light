@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\main.obj" 
+TO ".\Objects\C51_MiniSYS_output" 
+PRINT(".\Listings\C51_MiniSYS_output.m51")
