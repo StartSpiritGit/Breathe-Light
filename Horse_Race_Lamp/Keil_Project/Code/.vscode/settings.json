@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "p2_bit.h": "c",
+        "reg51.h": "c",
+        "REG51.H": "cpp"
+    }
+}

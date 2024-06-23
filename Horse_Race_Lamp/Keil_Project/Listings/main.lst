@@ -1,0 +1,84 @@
+C51 COMPILER V9.57.0.0   MAIN                                                              06/24/2024 01:36:27 PAGE 1   
+
+
+C51 COMPILER V9.57.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE Code\src\main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\List
+                    -ings\main.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include <REG51.h>
+   2          #include "P2_BIT.h"
+   3          
+   4          // Function prototypes
+   5          int main(void);
+   6          void Delay(long* delaycount);
+   7          
+   8          // Global variables
+   9          long DelayCount = 0xFFFFFFFFFFFF;
+  10          sbit RED_Yellow = P1^0;
+  11          // Main function
+  12          int main()
+  13          {
+  14   1        char i = 0;
+  15   1        P1 = 0x55;
+  16   1        RED_Yellow = 0;
+  17   1        while(1)
+  18   1        {
+  19   2          P2_BIT[i] = Low;
+  20   2          if(i > 0)
+  21   2          {
+  22   3            P2_BIT[i - 1] = High;
+  23   3          }
+  24   2          else
+  25   2          {
+  26   3            P2_BIT[7] = High;
+  27   3          }
+  28   2          P2 =            \
+  29   2          ((P2_BIT[P2_PORT_PIN_0]<<0) \
+  30   2          |(P2_BIT[P2_PORT_PIN_1]<<1) \
+  31   2          |(P2_BIT[P2_PORT_PIN_2]<<2) \
+  32   2          |(P2_BIT[P2_PORT_PIN_3]<<3) \
+  33   2          |(P2_BIT[P2_PORT_PIN_4]<<4) \
+  34   2          |(P2_BIT[P2_PORT_PIN_5]<<5) \
+  35   2          |(P2_BIT[P2_PORT_PIN_6]<<6) \
+  36   2          |(P2_BIT[P2_PORT_PIN_7]<<7));
+  37   2          Delay(&DelayCount);
+  38   2          i++;
+  39   2          if(i == 8)
+  40   2          {
+  41   3            i = 0;
+  42   3          }
+  43   2        }
+  44   1        
+  45   1        return ;
+  46   1      }
+  47          
+  48          // Function to delay for a specified 
+  49          void Delay(long* delaycount)
+  50          {
+  51   1        while (*delaycount --)
+  52   1        {
+  53   2          int i = 0xFFF;
+  54   2          while(i --);
+C51 COMPILER V9.57.0.0   MAIN                                                              06/24/2024 01:36:27 PAGE 2   
+
+  55   2        }
+  56   1        
+  57   1        return ;
+  58   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    169    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     12       6
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

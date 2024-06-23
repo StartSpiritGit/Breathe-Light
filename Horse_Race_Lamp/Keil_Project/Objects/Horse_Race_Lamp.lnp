@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\main.obj" 
+TO ".\Objects\Horse_Race_Lamp" 
+PRINT(".\Listings\Horse_Race_Lamp.m51")
