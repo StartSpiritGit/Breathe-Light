@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\main.obj" 
+TO ".\Objects\IO_Input" 
+PRINT(".\Listings\IO_Input.m51")
